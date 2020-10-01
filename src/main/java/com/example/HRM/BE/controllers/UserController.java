@@ -31,8 +31,14 @@ public class UserController {
     }
 
     @Secured("ROLE_ADMIN")
-    @PutMapping
+    @PutMapping("/{idUser}")
     public void editUser(@RequestBody @Validated Profile profile) {
         userService.editUser(profile);
+    }
+
+    @Secured("ROLE_ADMIN")
+    @PostMapping
+    public void addNewUser(@RequestBody Profile profile) {
+        userService.addNewUser(profile);
     }
 }

@@ -39,4 +39,8 @@ public class UserService {
     public void editUser(Profile profile) {
         profileService.editProfile(profile);
     }
+
+    public void addNewUser(Profile profile) {
+        profileService.addNewProfile(profile);
+    }
 }

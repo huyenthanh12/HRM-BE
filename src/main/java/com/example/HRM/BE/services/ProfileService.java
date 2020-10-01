@@ -2,16 +2,17 @@ package com.example.HRM.BE.services;
 
 import com.example.HRM.BE.DTO.Profile;
 import com.example.HRM.BE.converters.bases.Converter;
+import com.example.HRM.BE.entities.RoleEntity;
 import com.example.HRM.BE.entities.UserEntity;
 import com.example.HRM.BE.exceptions.UserException.EmailUserIsNotMatch;
+import com.example.HRM.BE.exceptions.UserException.UserHasExisted;
 import com.example.HRM.BE.exceptions.UserException.UserNotFoundException;
+import com.example.HRM.BE.repositories.RoleRepository;
 import com.example.HRM.BE.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class ProfileService {
@@ -20,13 +21,16 @@ public class ProfileService {
     UserRepository userRepository;
 
     @Autowired
+    RoleRepository roleRepository;
+
+    @Autowired
     private Converter<UserEntity, Profile> userEntityToProfile;
 
     @Autowired
     private Converter<Profile, UserEntity> profileToUserEntity;
 
     public Profile getProfile(String emailUser) {
-        if(userRepository.findByEmail(emailUser) == null) {
+        if (userRepository.findByEmail(emailUser) == null) {
             throw new UserNotFoundException();
         }
         return userEntityToProfile.convert(userRepository.findByEmail(emailUser).get());
@@ -83,5 +87,21 @@ public class ProfileService {
             profiles.add(userEntityToProfile.convert(userEntity));
         }
         return profiles;
+    }
+
+    public void addNewProfile(Profile profile) {
+        Optional<UserEntity> userEntityOptional = userRepository.findByEmail(profile.getEmail());
+
+        if (userEntityOptional.isPresent() && userEntityOptional.get().isEnable()) {
+            throw new UserHasExisted();
+        }
+        UserEntity userEntity = profileToUserEntity.convert(profile);
+
+        //set role default
+        Set<RoleEntity> roleEntities = new HashSet<>();
+        roleEntities.add(roleRepository.findByName("ROLE_MEMBER").get());
+        userEntity.setRoleEntities(roleEntities);
+
+        userRepository.save(userEntity);
     }
 }

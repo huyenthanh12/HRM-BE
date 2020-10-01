@@ -93,23 +93,6 @@ public class AuthenticationService {
     }
 
     public ResponseEntity<Token> loginWithUsernamePassword(User user) {
-
-//        // doan ni coi co username ko, ko thi thở exception luon
-//        UserEntity userFromDatabase = userRepository.findByEmail(user.getUsername()).orElseThrow(
-//                () -> new UsernameNotFoundException(user.getUsername())
-//        );
-//
-//        System.out.println("username dung");
-//        // eo co exception cho pasword // de copy qua // o deo c
-//
-//        if (!BCrypt.checkpw(user.getPassword(), userFromDatabase.getPassword())) {
-//            System.out.println("pass sai");
-//            System.out.printf(new BCryptPasswordEncoder().encode(user.getPassword()));
-//            System.out.println("user dât: " + userFromDatabase.getPassword());
-//
-//            throw new UsernameNotFoundException(user.getUsername());
-//        }
-//        System.out.println("username + pass deu dung");
         return generateToken(user.getUsername(), user.getPassword());
     }
 }

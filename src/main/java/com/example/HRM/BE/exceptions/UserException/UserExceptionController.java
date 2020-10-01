@@ -22,4 +22,9 @@ public class UserExceptionController {
     public ResponseEntity<Object> exception(UserAccessDeniedException exception) {
         return new ResponseEntity<>("User access denied", HttpStatus.FORBIDDEN);
     }
+
+    @ExceptionHandler(value = UserHasExisted.class)
+    public ResponseEntity<Object> exception(UserHasExisted exception) {
+        return new ResponseEntity<>("User has existed", HttpStatus.FORBIDDEN);
+    }
 }

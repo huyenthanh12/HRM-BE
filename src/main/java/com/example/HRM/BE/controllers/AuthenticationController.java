@@ -19,8 +19,6 @@ public class AuthenticationController {
 
     @PostMapping
     public ResponseEntity<Token> loginWithUsername(@RequestBody User user){
-//        System.out.printf("user" + user.getUsername());
-//        System.out.printf("password: " + user.getPassword());
         return authenticationService.loginWithUsernamePassword(user);
     }
 
