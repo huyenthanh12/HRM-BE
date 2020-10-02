@@ -43,7 +43,7 @@ public class UserEntityToProfile extends Converter<UserEntity, Profile> {
         if (source.getAvatar() != null) {
             profile.setAvatarBase(new String(Base64.getEncoder().encode(source.getAvatar())));
         }
-        profile.setEnable(source.isEnable());
+        profile.setDisable(source.isDisable());
 
         List<Profile.Role> rolesResult = new ArrayList<>();
         for (RoleEntity roleEntity : source.getRoleEntities()) {

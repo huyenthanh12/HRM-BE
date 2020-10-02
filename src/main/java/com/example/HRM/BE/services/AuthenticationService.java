@@ -76,7 +76,7 @@ public class AuthenticationService {
         Optional<UserEntity> userEntityOptional = userRepository.findByEmail(email);
         if (userEntityOptional.isPresent()) {
             UserEntity userEntity = userEntityOptional.get();
-            if (!userEntity.isEnable()) {
+            if (!userEntity.isDisable()) {
                 throw new UserDisableException();
             }
         }

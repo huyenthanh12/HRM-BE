@@ -41,4 +41,10 @@ public class UserController {
     public void addNewUser(@RequestBody Profile profile) {
         userService.addNewUser(profile);
     }
+
+    @Secured("ROLE_ADMIN")
+    @DeleteMapping("/{id}")
+    public void deleteUserFollowID(@PathVariable("id") int id) {
+        userService.deleteUserFollowId(id);
+    }
 }

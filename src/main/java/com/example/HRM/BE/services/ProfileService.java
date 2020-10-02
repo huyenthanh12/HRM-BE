@@ -92,7 +92,7 @@ public class ProfileService {
     public void addNewProfile(Profile profile) {
         Optional<UserEntity> userEntityOptional = userRepository.findByEmail(profile.getEmail());
 
-        if (userEntityOptional.isPresent() && userEntityOptional.get().isEnable()) {
+        if (userEntityOptional.isPresent() && userEntityOptional.get().isDisable()) {
             throw new UserHasExisted();
         }
         UserEntity userEntity = profileToUserEntity.convert(profile);

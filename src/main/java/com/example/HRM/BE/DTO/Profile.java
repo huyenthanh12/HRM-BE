@@ -55,7 +55,7 @@ public class Profile {
 
     private List<Role> roles;
 
-    private boolean enable;
+    private boolean disable;
 
     @AllArgsConstructor
     @Data

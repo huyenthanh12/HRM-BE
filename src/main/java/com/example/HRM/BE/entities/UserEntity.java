@@ -43,7 +43,7 @@ public class UserEntity {
     private int contractPeriod;
 
     @Column(nullable = false)
-    private boolean enable;
+    private boolean disable;
 
     @Lob
     @Column(name = "avatar")
@@ -63,7 +63,7 @@ public class UserEntity {
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.enable = true;
+        this.disable = true;
     }
 
     @ManyToMany(fetch = FetchType.EAGER)
