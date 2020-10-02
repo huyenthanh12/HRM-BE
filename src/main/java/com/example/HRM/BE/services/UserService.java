@@ -51,8 +51,7 @@ public class UserService {
         if (userEntityOptional.isPresent()) {
             UserEntity userEntity = userEntityOptional.get();
             userRepository.delete(userEntity);
-        } else {
-            throw new UserNotFoundException();
         }
+        throw new UserNotFoundException();
     }
 }

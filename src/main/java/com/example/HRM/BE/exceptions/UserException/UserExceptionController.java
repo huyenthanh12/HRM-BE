@@ -15,7 +15,7 @@ public class UserExceptionController {
 
     @ExceptionHandler(value = UserNotFoundException.class)
     public ResponseEntity<Object> exception(UserNotFoundException exception) {
-        return new ResponseEntity<>("User not found", HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(value = UserAccessDeniedException.class)
