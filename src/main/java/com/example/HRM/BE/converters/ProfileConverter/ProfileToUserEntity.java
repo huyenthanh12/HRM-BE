@@ -17,14 +17,14 @@ import java.util.Set;
 @Component
 public class ProfileToUserEntity extends Converter<Profile, UserEntity> {
 
-//    @Autowired
-//    private Converter<Skill, SkillEntity> skillToSkillEntity;
+    @Autowired
+    private Converter<Skill, SkillEntity> skillToSkillEntity;
 
-//    @Autowired
-//    SkillRepository skillRepository;
-//
-//    @Autowired
-//    SkillService skillService;
+    @Autowired
+    SkillRepository skillRepository;
+
+    @Autowired
+    SkillService skillService;
 
     @Override
     public UserEntity convert(Profile source) {

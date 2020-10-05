@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class SkillEntityToSkill extends Converter<SkillEntity, Skill> {
 
-//    @Autowired
-//    private Converter<CategoryEntity, Category> categoryEntityToCategory;
+    @Autowired
+    private Converter<CategoryEntity, Category> categoryEntityToCategory;
 
     @Override
     public Skill convert(SkillEntity source) {
@@ -20,7 +20,7 @@ public class SkillEntityToSkill extends Converter<SkillEntity, Skill> {
 
         skill.setId(source.getId());
         skill.setName(source.getName());
-//        skill.setCategory(categoryEntityToCategory.convert(source.getCategory);
+        skill.setCategory(categoryEntityToCategory.convert(source.getCategoryEntity()));
 
         return skill;
     }

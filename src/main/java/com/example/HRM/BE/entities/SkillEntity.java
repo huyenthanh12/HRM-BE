@@ -1,5 +1,7 @@
 package com.example.HRM.BE.entities;
 
+import lombok.*;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -19,7 +21,7 @@ public class SkillEntity {
     @ManyToMany(mappedBy = "skillEntities")
     private Set<UserEntity> userEntities;
 
-    public SkillEntity() { }
+    public SkillEntity() {   }
 
     public int getId() {
         return id;
@@ -36,7 +38,7 @@ public class SkillEntity {
     public void setName(String name) {
         this.name = name;
     }
-
+    
     public CategoryEntity getCategoryEntity() {
         return categoryEntities;
     }

@@ -1,5 +1,7 @@
 package com.example.HRM.BE.entities;
 
+import lombok.*;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -11,14 +13,17 @@ public class CategoryEntity {
 
     private String name;
 
+    private String status;
+
     @OneToMany(mappedBy = "categoryEntities", cascade = CascadeType.ALL)
     private List<SkillEntity> skillEntities;
 
-    public CategoryEntity() { }
+    public CategoryEntity() {    }
 
-    public CategoryEntity(int id, String name) {
+    public CategoryEntity(int id, String name, String status) {
         this.id = id;
         this.name =  name;
+        this.status = status;
     }
 
     public int getId() {
@@ -43,5 +48,13 @@ public class CategoryEntity {
 
     public void setSkillEntities(List<SkillEntity> skillEntities) {
         this.skillEntities = skillEntities;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
