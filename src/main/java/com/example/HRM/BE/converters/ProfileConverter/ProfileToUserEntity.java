@@ -2,7 +2,7 @@ package com.example.HRM.BE.converters.ProfileConverter;
 
 import com.example.HRM.BE.DTO.Profile;
 import com.example.HRM.BE.DTO.Skill;
-import com.example.HRM.BE.converters.bases.Converter;
+import com.example.HRM.BE.converters.Bases.Converter;
 import com.example.HRM.BE.entities.SkillEntity;
 import com.example.HRM.BE.entities.UserEntity;
 import com.example.HRM.BE.repositories.SkillRepository;
@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 
 @Component

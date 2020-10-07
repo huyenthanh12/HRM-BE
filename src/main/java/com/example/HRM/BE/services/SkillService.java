@@ -1,7 +1,7 @@
 package com.example.HRM.BE.services;
 
 import com.example.HRM.BE.DTO.Skill;
-import com.example.HRM.BE.converters.bases.Converter;
+import com.example.HRM.BE.converters.Bases.Converter;
 import com.example.HRM.BE.entities.CategoryEntity;
 import com.example.HRM.BE.entities.SkillEntity;
 import com.example.HRM.BE.entities.UserEntity;
@@ -17,8 +17,6 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import static com.example.HRM.BE.common.Constants.PENDING;
 
 @Component
 public class SkillService {

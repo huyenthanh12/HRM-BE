@@ -1,4 +1,4 @@
-package com.example.HRM.BE.converters.bases;
+package com.example.HRM.BE.converters.Bases;
 
 import java.util.List;
 import java.util.stream.Collectors;

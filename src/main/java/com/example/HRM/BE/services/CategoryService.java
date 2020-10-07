@@ -1,7 +1,7 @@
 package com.example.HRM.BE.services;
 
 import com.example.HRM.BE.DTO.Category;
-import com.example.HRM.BE.converters.bases.Converter;
+import com.example.HRM.BE.converters.Bases.Converter;
 import com.example.HRM.BE.entities.CategoryEntity;
 import com.example.HRM.BE.entities.SkillEntity;
 import com.example.HRM.BE.entities.UserEntity;
