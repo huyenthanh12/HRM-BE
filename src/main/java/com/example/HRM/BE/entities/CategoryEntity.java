@@ -1,5 +1,6 @@
 package com.example.HRM.BE.entities;
 
+import com.example.HRM.BE.DTO.Skill;
 import lombok.*;
 
 import javax.persistence.*;

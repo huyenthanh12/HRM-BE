@@ -14,6 +14,15 @@ public class SkillEntity {
 
     private String name;
 
+    public CategoryEntity getCategoryEntities() {
+        return categoryEntities;
+    }
+
+    public void setCategoryEntities(CategoryEntity categoryEntities) {
+        this.categoryEntities = categoryEntities;
+    }
+
+
     @ManyToOne
     @JoinColumn
     private CategoryEntity categoryEntities;

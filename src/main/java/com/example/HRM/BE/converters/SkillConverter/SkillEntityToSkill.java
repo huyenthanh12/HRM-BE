@@ -8,6 +8,8 @@ import com.example.HRM.BE.entities.SkillEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class SkillEntityToSkill extends Converter<SkillEntity, Skill> {
 
