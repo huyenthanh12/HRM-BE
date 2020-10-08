@@ -9,7 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Data
-@Entity(name = "request-types")
+@Entity(name = "request_types")
 @NoArgsConstructor
 public class RequestTypeEntity {
 
