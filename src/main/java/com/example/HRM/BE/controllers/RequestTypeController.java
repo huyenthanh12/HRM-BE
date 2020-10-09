@@ -4,8 +4,10 @@ import com.example.HRM.BE.DTO.RequestType;
 import com.example.HRM.BE.services.RequestTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 @RestController
@@ -34,5 +36,19 @@ public class RequestTypeController {
     @PostMapping
     public RequestType addNewRequestType(@RequestBody RequestType requestType) {
         return requestTypeService.addRequestType(requestType.getName());
+    }
+
+    @Secured("ROLE_ADMIN")
+    @PutMapping
+    public RequestType updateRequestType(@RequestBody @Validated RequestType requestType,
+                                                @PathParam("id") int id) {
+        requestType.setId(id);
+        return requestTypeService.edit(requestType);
+    }
+
+    @Secured("ROLE_ADMIN")
+    @DeleteMapping("/{id}")
+    public void deleteRequestType(@PathVariable int id) {
+        requestTypeService.deleteRequestType(id);
     }
 }

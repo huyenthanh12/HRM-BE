@@ -29,7 +29,7 @@ public class RequestTypeService {
     public List<RequestType> getAllTypesOfRequest() {
 
         List<RequestType> requestTypeList = new ArrayList<>();
-        List<RequestTypeEntity> requestTypeEntities = requestTypeRepository.findByOrderByNameAsc();
+        List<RequestTypeEntity> requestTypeEntities = requestTypeRepository.findAll();
 
         for (RequestTypeEntity requestTypeEntity : requestTypeEntities) {
             requestTypeList.add(requestTypeEntityToRequestType.convert(requestTypeEntity));
@@ -47,7 +47,6 @@ public class RequestTypeService {
     }
 
     public List<RequestType> getRequestTypeFollowName(String key) {
-
         List<RequestType> requestTypeList = new ArrayList<>();
 
         for (RequestTypeEntity requestTypeEntity : requestTypeRepository.findByKeyword(key)) {
@@ -64,5 +63,26 @@ public class RequestTypeService {
         } else {
             return requestTypeEntityToRequestType.convert(requestTypeRepository.save(new RequestTypeEntity(name)));
         }
+
+    }
+
+    public RequestType edit(RequestType requestType) {
+
+        if (!requestTypeRepository.findById(requestType.getId()).isPresent()) {
+            throw new RequestTypeNotFound();
+        } else {
+            requestTypeRepository.save(requestTypeToRequestTypeEntity.convert(requestType));
+        }
+        return getRequestTypeFollowID(requestType.getId());
+    }
+
+    public void deleteRequestType(int id) {
+
+        if (!requestTypeRepository.findById(id).isPresent()) {
+            throw new RequestTypeNotFound();
+        } else {
+            requestTypeRepository.deleteById(id);
+        }
     }
 }
+
