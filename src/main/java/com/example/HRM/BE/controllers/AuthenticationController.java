@@ -24,7 +24,6 @@ public class AuthenticationController {
 
     @GetMapping
     public ResponseEntity<?> loginWithGoogle(@RequestParam("token-google") String tokenGoogle) throws IOException {
-        System.out.println(tokenGoogle);
         String email = authenticationService.getEmailFromTokenUser(tokenGoogle);
         return authenticationService.generateTokenGoogle(email);
     }

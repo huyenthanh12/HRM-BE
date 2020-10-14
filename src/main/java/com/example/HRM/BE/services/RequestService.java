@@ -85,8 +85,6 @@ public class RequestService {
 
         Optional<RequestEntity> requestEntityOptional = requestRepository.findById(request.getId());
 
-        System.out.printf(String.valueOf(request.getId()));
-
         if (!requestEntityOptional.isPresent()) {
             throw new RequestNotFound();
         } else {
@@ -107,7 +105,6 @@ public class RequestService {
 
         Optional<RequestEntity> requestEntityOptional = requestRepository.findById(id);
 
-        System.out.printf("abc: ", id);
 
         if (!requestEntityOptional.isPresent()) {
             throw new RequestNotFound();

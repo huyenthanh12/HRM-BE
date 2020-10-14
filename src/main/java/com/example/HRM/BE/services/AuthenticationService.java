@@ -61,16 +61,6 @@ public class AuthenticationService {
     }
 
     public ResponseEntity<Token> generateTokenGoogle(String email) {
-//        final Authentication authentication = authenticationManager.authenticate(
-//                new UsernamePasswordAuthenticationToken(
-//                        email,
-//                        pass
-//                )
-//        );
-//
-//        SecurityContextHolder.getContext().setAuthentication(authentication);
-//        final String token = jwtTokeUtil.generationToken(authentication);
-//        return ResponseEntity.ok(new Token(token));
         Optional<UserEntity> userEntityOptional = userRepository.findByEmail(email);
         if (userEntityOptional.isPresent()) {
             final String token = jwtTokeUtil.generationTokenGoogle(userEntityOptional.get());

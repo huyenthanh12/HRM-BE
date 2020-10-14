@@ -12,4 +12,9 @@ public class DayOffTypeExceptionController {
     public ResponseEntity<Object> exception(DayOffTypeNotFound exception) {
         return new ResponseEntity<>("Type of day off is not found", HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(value = DayOffTypeHasExisted.class)
+    public ResponseEntity<Object> exception(DayOffTypeHasExisted exception) {
+        return new ResponseEntity<>("Type of day off has existed in the database", HttpStatus.FORBIDDEN);
+    }
 }
