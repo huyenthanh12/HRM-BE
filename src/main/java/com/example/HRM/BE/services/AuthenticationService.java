@@ -4,6 +4,7 @@ import com.example.HRM.BE.DTO.Token;
 import com.example.HRM.BE.DTO.User;
 import com.example.HRM.BE.configurations.TokenProvider;
 import com.example.HRM.BE.entities.UserEntity;
+import com.example.HRM.BE.exceptions.UserException.UserAccessDeniedException;
 import com.example.HRM.BE.exceptions.UserException.UserDisableException;
 import com.example.HRM.BE.repositories.RoleRepository;
 import com.example.HRM.BE.repositories.UserRepository;
@@ -57,6 +58,25 @@ public class AuthenticationService {
             return email;
         }
         return null;
+    }
+
+    public ResponseEntity<Token> generateTokenGoogle(String email) {
+//        final Authentication authentication = authenticationManager.authenticate(
+//                new UsernamePasswordAuthenticationToken(
+//                        email,
+//                        pass
+//                )
+//        );
+//
+//        SecurityContextHolder.getContext().setAuthentication(authentication);
+//        final String token = jwtTokeUtil.generationToken(authentication);
+//        return ResponseEntity.ok(new Token(token));
+        Optional<UserEntity> userEntityOptional = userRepository.findByEmail(email);
+        if (userEntityOptional.isPresent()) {
+            final String token = jwtTokeUtil.generationTokenGoogle(userEntityOptional.get());
+            return ResponseEntity.ok(new Token(token));
+        }
+        throw new UserAccessDeniedException();
     }
 
     public ResponseEntity<Token> generateToken(String email, String pass) {

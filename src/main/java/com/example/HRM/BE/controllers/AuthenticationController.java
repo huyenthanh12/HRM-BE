@@ -22,10 +22,11 @@ public class AuthenticationController {
         return authenticationService.loginWithUsernamePassword(user);
     }
 
-    @PutMapping
-    public ResponseEntity<?> loginWithGoogle(@RequestHeader("token-google") String tokenGoogle) throws IOException, GeneralSecurityException {
+    @GetMapping
+    public ResponseEntity<?> loginWithGoogle(@RequestParam("token-google") String tokenGoogle) throws IOException {
+        System.out.println(tokenGoogle);
         String email = authenticationService.getEmailFromTokenUser(tokenGoogle);
-        return authenticationService.generateToken(email, email);
+        return authenticationService.generateTokenGoogle(email);
     }
 
 }

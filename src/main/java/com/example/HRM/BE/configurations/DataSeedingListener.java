@@ -49,7 +49,7 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
         addRoleIfMissing("ROLE_ADMIN");
         addRoleIfMissing("ROLE_MEMBER");
 
-        addUserIfMissing("cctrang123@gmail.com", "abc123", "ROLE_ADMIN");
+        addUserIfMissing("cctrang123@gmail.com", "abc123", "ROLE_ADMIN", "ROLE_MEMBER");
 
     }
 }

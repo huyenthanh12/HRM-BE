@@ -1,5 +1,7 @@
 package com.example.HRM.BE.configurations;
 
+import com.example.HRM.BE.entities.RoleEntity;
+import com.example.HRM.BE.entities.UserEntity;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -59,6 +61,23 @@ public class TokenProvider {
         return Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim(AUTHORITIES_KEY, authorities)
+                .signWith(SignatureAlgorithm.HS256, signingKey)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_VALIDITY_SECONDS * 1000))
+                .compact();
+    }
+
+    public String generationTokenGoogle(UserEntity userEntity){
+        StringBuilder roleString = new StringBuilder();
+        for(RoleEntity roleEntity : userEntity.getRoleEntities()) {
+            roleString.append(roleEntity.getName());
+            roleString.append(",");
+        }
+        roleString.setLength(roleString.length() - 1);
+
+        return Jwts.builder()
+                .setSubject(userEntity.getEmail())
+                .claim(AUTHORITIES_KEY, roleString)
                 .signWith(SignatureAlgorithm.HS256, signingKey)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_VALIDITY_SECONDS * 1000))
