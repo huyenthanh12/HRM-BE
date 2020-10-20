@@ -191,17 +191,17 @@ public class DayOffService {
 
         DayOffEntity dayOffEntity = dayOffDayOffEntityConverter.convert(dayOff);
 
-        Email email = new Email();
-        email.setSendToEmail(emailAdmins);
-        email.setSubject(SUBJECT_DAY_OFF);
-
-        String[] titles = {"Day off by email", "Day off type", "Create At", "Day start", "Day end", "Description"};
-        String[] content = {dayOffEntity.getUserEntity().getEmail(), dayOffEntity.getDayOffTypeEntity().getName(),
-                            dayOffEntity.getCreateAt().toString(), dayOffEntity.getDayStart().toString(),
-                            dayOffEntity.getDayEnd().toString(), dayOffEntity.getDescription()};
-
-        email.setText(commonMethods.formatContentEmail(titles, content, POINT_PAGE_MANAGEMENT_DAY_OFF, POINT_CONTENT_MANAGEMENT_DAY_OFF));
-        emailController.sendEmail(email);
+//        Email email = new Email();
+//        email.setSendToEmail(emailAdmins);
+//        email.setSubject(SUBJECT_DAY_OFF);
+//
+//        String[] titles = {"Day off by email", "Day off type", "Create At", "Day start", "Day end", "Description"};
+//        String[] content = {dayOffEntity.getUserEntity().getEmail(), dayOffEntity.getDayOffTypeEntity().getName(),
+//                            dayOffEntity.getCreateAt().toString(), dayOffEntity.getDayStart().toString(),
+//                            dayOffEntity.getDayEnd().toString(), dayOffEntity.getDescription()};
+//
+//        email.setText(commonMethods.formatContentEmail(titles, content, POINT_PAGE_MANAGEMENT_DAY_OFF, POINT_CONTENT_MANAGEMENT_DAY_OFF));
+//        emailController.sendEmail(email);
 
         return dayOffRepository.save(dayOffEntity);
     }

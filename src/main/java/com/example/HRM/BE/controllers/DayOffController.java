@@ -50,7 +50,6 @@ public class DayOffController {
 
     @PostMapping
     public DayOffEntity requestNewDayOff(@RequestBody DayOff dayOff) {
-        log.info("alooooooooooooooooooooooooooooooo");
         return dayOffService.requestNewDayOff(dayOff);
     }
 
