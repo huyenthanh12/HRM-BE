@@ -18,6 +18,7 @@ import com.example.HRM.BE.exceptions.UserException.UserNotFoundException;
 import com.example.HRM.BE.repositories.DayOffRepository;
 import com.example.HRM.BE.repositories.DayOffTypeRepository;
 import com.example.HRM.BE.repositories.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
@@ -35,6 +36,7 @@ import java.util.Optional;
 import static com.example.HRM.BE.common.Constants.*;
 
 @Service
+@Slf4j
 public class DayOffService {
 
     @Autowired
@@ -180,10 +182,12 @@ public class DayOffService {
         long dateStart = dayOff.getDayStart().getTime();
         long dateEnd = dayOff.getDayEnd().getTime();
 
+        log.info("toi dayyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
+
         if (dateStart > dateEnd) {
             throw new BadRequestException("Incorrect information");
         }
-
+        log.info("qua duccccccccccccccccccccccccccc");
         Date date = new Date(System.currentTimeMillis());
         dayOff.setProfileUser(userEntityProfileConverter.convert(userRepository.findById(getUserID()).get()));
         dayOff.setCreateAt(date);
