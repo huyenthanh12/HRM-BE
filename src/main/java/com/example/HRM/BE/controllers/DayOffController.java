@@ -4,6 +4,7 @@ import com.example.HRM.BE.DTO.DayOff;
 import com.example.HRM.BE.DTO.NumberDayOff;
 import com.example.HRM.BE.entities.DayOffEntity;
 import com.example.HRM.BE.services.DayOffService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.annotation.Validated;
@@ -15,6 +16,7 @@ import static com.example.HRM.BE.common.Constants.PERSONAL;
 
 @RestController
 @RequestMapping("/api/day_offs")
+@Slf4j
 public class DayOffController {
 
     @Autowired
@@ -48,6 +50,7 @@ public class DayOffController {
 
     @PostMapping
     public DayOffEntity requestNewDayOff(@RequestBody DayOff dayOff) {
+        log.info("alooooooooooooooooooooooooooooooo");
         return dayOffService.requestNewDayOff(dayOff);
     }
 
