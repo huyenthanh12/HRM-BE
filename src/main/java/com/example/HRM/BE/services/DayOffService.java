@@ -145,8 +145,6 @@ public class DayOffService {
 
     public DayOffEntity requestNewDayOff(DayOff dayOff) {
 
-        log.info("vo dayyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
-
         //number of day off register in request converter
         float numberDayOffs = commonMethods.calculateDaysBetweenTwoDate(dayOff.getDayStart(), dayOff.getDayEnd());
         LocalDate localDateStart = dayOff.getDayStart().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -183,19 +181,19 @@ public class DayOffService {
 
         long dateStart = dayOff.getDayStart().getTime();
         long dateEnd = dayOff.getDayEnd().getTime();
-
-        log.info("toi dayyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
-
-        if (dateStart > dateEnd) {
-            throw new BadRequestException("Incorrect information");
-        }
-        log.info("qua duccccccccccccccccccccccccccc");
-        Date date = new Date(System.currentTimeMillis());
-        dayOff.setProfileUser(userEntityProfileConverter.convert(userRepository.findById(getUserID()).get()));
-        dayOff.setCreateAt(date);
-        dayOff.setStatus(PENDING);
-
-        DayOffEntity dayOffEntity = dayOffDayOffEntityConverter.convert(dayOff);
+//
+//        log.info("toi dayyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
+//
+//        if (dateStart > dateEnd) {
+//            throw new BadRequestException("Incorrect information");
+//        }
+//        log.info("qua duccccccccccccccccccccccccccc");
+//        Date date = new Date(System.currentTimeMillis());
+//        dayOff.setProfileUser(userEntityProfileConverter.convert(userRepository.findById(getUserID()).get()));
+//        dayOff.setCreateAt(date);
+//        dayOff.setStatus(PENDING);
+//
+//        DayOffEntity dayOffEntity = dayOffDayOffEntityConverter.convert(dayOff);
 
 //        Email email = new Email();
 //        email.setSendToEmail(emailAdmins);
@@ -209,8 +207,10 @@ public class DayOffService {
 //        email.setText(commonMethods.formatContentEmail(titles, content, POINT_PAGE_MANAGEMENT_DAY_OFF, POINT_CONTENT_MANAGEMENT_DAY_OFF));
 //        emailController.sendEmail(email);
 
-        return dayOffRepository.save(dayOffEntity);
+//        return dayOffRepository.save(dayOffEntity);
+        return new DayOffEntity();
     }
+
 
     private float getNumberDayOffsByUserRemaining(int id, int year) {
 
