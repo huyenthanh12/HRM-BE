@@ -181,19 +181,19 @@ public class DayOffService {
 
         long dateStart = dayOff.getDayStart().getTime();
         long dateEnd = dayOff.getDayEnd().getTime();
-//
-//        log.info("toi dayyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
-//
-//        if (dateStart > dateEnd) {
-//            throw new BadRequestException("Incorrect information");
-//        }
-//        log.info("qua duccccccccccccccccccccccccccc");
-//        Date date = new Date(System.currentTimeMillis());
-//        dayOff.setProfileUser(userEntityProfileConverter.convert(userRepository.findById(getUserID()).get()));
-//        dayOff.setCreateAt(date);
-//        dayOff.setStatus(PENDING);
-//
-//        DayOffEntity dayOffEntity = dayOffDayOffEntityConverter.convert(dayOff);
+
+        log.info("toi dayyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
+
+        if (dateStart > dateEnd) {
+            throw new BadRequestException("Incorrect information");
+        }
+        log.info("qua duccccccccccccccccccccccccccc");
+        Date date = new Date(System.currentTimeMillis());
+        dayOff.setProfileUser(userEntityProfileConverter.convert(userRepository.findById(getUserID()).get()));
+        dayOff.setCreateAt(date);
+        dayOff.setStatus(PENDING);
+
+        DayOffEntity dayOffEntity = dayOffDayOffEntityConverter.convert(dayOff);
 
 //        Email email = new Email();
 //        email.setSendToEmail(emailAdmins);
