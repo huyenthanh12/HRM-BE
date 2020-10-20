@@ -14,6 +14,8 @@ public class SkillEntity {
 
     private String name;
 
+    private String status;
+
     public CategoryEntity getCategoryEntities() {
         return categoryEntities;
     }
@@ -21,7 +23,6 @@ public class SkillEntity {
     public void setCategoryEntities(CategoryEntity categoryEntities) {
         this.categoryEntities = categoryEntities;
     }
-
 
     @ManyToOne
     @JoinColumn
@@ -62,5 +63,13 @@ public class SkillEntity {
 
     public void setUserEntities(Set<UserEntity> userEntities) {
         this.userEntities = userEntities;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

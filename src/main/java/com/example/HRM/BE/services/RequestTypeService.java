@@ -3,9 +3,11 @@ package com.example.HRM.BE.services;
 import com.example.HRM.BE.DTO.RequestType;
 import com.example.HRM.BE.converters.RequestTypeConverter.RequestTypeEntityToRequestType;
 import com.example.HRM.BE.converters.RequestTypeConverter.RequestTypeToRequestTypeEntity;
+import com.example.HRM.BE.entities.RequestEntity;
 import com.example.HRM.BE.entities.RequestTypeEntity;
 import com.example.HRM.BE.exceptions.RequestTypeException.RequestTypeHasExisted;
 import com.example.HRM.BE.exceptions.RequestTypeException.RequestTypeNotFound;
+import com.example.HRM.BE.repositories.RequestRepository;
 import com.example.HRM.BE.repositories.RequestTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,9 @@ public class RequestTypeService {
 
     @Autowired
     private RequestTypeEntityToRequestType requestTypeEntityToRequestType;
+
+    @Autowired
+    private RequestRepository requestRepository;
 
     public List<RequestType> getAllTypesOfRequest() {
 
@@ -81,6 +86,10 @@ public class RequestTypeService {
         if (!requestTypeRepository.findById(id).isPresent()) {
             throw new RequestTypeNotFound();
         } else {
+            //delete request has this request type
+            for (RequestEntity requestEntity : requestRepository.findByRequestTypeEntityId(id)) {
+                requestRepository.delete(requestEntity);
+            }
             requestTypeRepository.deleteById(id);
         }
     }

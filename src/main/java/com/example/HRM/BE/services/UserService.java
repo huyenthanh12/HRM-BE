@@ -2,8 +2,12 @@ package com.example.HRM.BE.services;
 
 import com.example.HRM.BE.DTO.Profile;
 import com.example.HRM.BE.converters.Bases.Converter;
+import com.example.HRM.BE.entities.DayOffEntity;
+import com.example.HRM.BE.entities.RequestEntity;
 import com.example.HRM.BE.entities.UserEntity;
 import com.example.HRM.BE.exceptions.UserException.UserNotFoundException;
+import com.example.HRM.BE.repositories.DayOffRepository;
+import com.example.HRM.BE.repositories.RequestRepository;
 import com.example.HRM.BE.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +26,12 @@ public class UserService {
 
     @Autowired
     private Converter<UserEntity, Profile> userEntityToProfile;
+
+    @Autowired
+    private RequestRepository requestRepository;
+
+    @Autowired
+    private DayOffRepository dayOffRepository;
 
     public List<Profile> getAllUser() {
         return userEntityToProfile.convert(userRepository.findAll());
@@ -46,10 +56,21 @@ public class UserService {
     public void deleteUserFollowId(int id) {
         Optional<UserEntity> userEntityOptional = userRepository.findById(id);
 
-        if (userEntityOptional.isPresent()) {
-            UserEntity userEntity = userEntityOptional.get();
-            userRepository.delete(userEntity);
+        if (!userEntityOptional.isPresent()) {
+            throw new UserNotFoundException();
         }
-        throw new UserNotFoundException();
+        UserEntity userEntity = userEntityOptional.get();
+
+        //delete requests of user
+        for (RequestEntity requestEntity : requestRepository.findByUserEntityId(id)) {
+            requestRepository.delete(requestEntity);
+        }
+
+        //delete day offs of user
+        for (DayOffEntity dayOffEntity : dayOffRepository.findByUserEntityId(id)) {
+            dayOffRepository.delete(dayOffEntity);
+        }
+
+        userRepository.delete(userEntity);
     }
 }

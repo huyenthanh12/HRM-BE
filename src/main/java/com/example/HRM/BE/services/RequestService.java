@@ -105,11 +105,9 @@ public class RequestService {
 
         Optional<RequestEntity> requestEntityOptional = requestRepository.findById(id);
 
-
         if (!requestEntityOptional.isPresent()) {
             throw new RequestNotFound();
         } else {
-//            RequestEntity requestEntity = requestEntityOptional.get();
             requestRepository.deleteById(id);
         }
     }

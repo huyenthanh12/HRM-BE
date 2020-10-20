@@ -20,24 +20,27 @@ public class DayOffEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
+    @JsonAlias("day_start")
     @Column(nullable = false)
     @NonNull
     private Date dayStart;
 
+    @JsonAlias("day_end")
     @Column(nullable = false)
     @NonNull
     private Date dayEnd;
 
+    @JsonAlias("create_at")
     @Column(nullable = false)
-    @NonNull
     private Date createAt;
 
+    @JsonAlias("description")
     @Column(nullable = false)
     @NonNull
     private String description;
 
+    @JsonAlias("status")
     @Column(nullable = false)
-    @NonNull
     private String status;
 
     @ManyToOne

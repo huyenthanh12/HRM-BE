@@ -3,9 +3,11 @@ package com.example.HRM.BE.services;
 import com.example.HRM.BE.DTO.DayOff;
 import com.example.HRM.BE.DTO.DayOffType;
 import com.example.HRM.BE.converters.Bases.Converter;
+import com.example.HRM.BE.entities.DayOffEntity;
 import com.example.HRM.BE.entities.DayOffTypeEntity;
 import com.example.HRM.BE.exceptions.DayOffException.DayOffNotFound;
 import com.example.HRM.BE.exceptions.DayOffTypeException.DayOffTypeHasExisted;
+import com.example.HRM.BE.repositories.DayOffRepository;
 import com.example.HRM.BE.repositories.DayOffTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,9 @@ public class DayOffTypeService {
 
     @Autowired
     private DayOffTypeRepository dayOffTypeRepository;
+
+    @Autowired
+    private DayOffRepository dayOffRepository;
 
     @Autowired
     private Converter<DayOffType, DayOffTypeEntity> dayOffTypeDayOffTypeEntityConverter;
@@ -74,8 +79,12 @@ public class DayOffTypeService {
 
         if (!dayOffTypeEntityOptional.isPresent()) {
             throw new DayOffNotFound();
+        } else {
+            //delete day off has day off type deleted
+            for (DayOffEntity dayOffEntity : dayOffRepository.findByDayOffTypeEntityId(id)) {
+                dayOffRepository.delete(dayOffEntity);
+            }
         }
-
         dayOffTypeRepository.deleteById(id);
     }
 }

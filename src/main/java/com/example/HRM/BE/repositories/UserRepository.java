@@ -34,4 +34,10 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
             nativeQuery = true
     )
     List<UserEntity> findAllUserByKeywordFollowPageable(@Param("keyword") String keyword, Pageable pageable);
+
+//    @Query(
+//            value = "DELETE from requests where user_entity_id = id",
+//            nativeQuery = true
+//    )
+//    List<UserEntity> deleteUserIdInRequestTable(@Param("id") int id);
 }

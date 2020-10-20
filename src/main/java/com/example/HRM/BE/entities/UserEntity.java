@@ -63,7 +63,7 @@ public class UserEntity {
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.disable = true;
+        this.disable = false;
     }
 
     @ManyToMany(fetch = FetchType.EAGER)

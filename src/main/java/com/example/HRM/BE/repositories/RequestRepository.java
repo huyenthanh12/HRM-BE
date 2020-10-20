@@ -12,6 +12,10 @@ public interface RequestRepository extends JpaRepository<RequestEntity, Integer>
 
     List<RequestEntity> findByUserEntityEmail(String email);
 
+    List<RequestEntity> findByUserEntityId(int id);
+
+    List<RequestEntity> findByRequestTypeEntityId(int id);
+
     List<RequestEntity> findByAddress(String keyword);
 
     List<RequestEntity> findByStatus(String keyword);
@@ -19,7 +23,7 @@ public interface RequestRepository extends JpaRepository<RequestEntity, Integer>
     List<RequestEntity> findByReason(String keyword);
 
     @Query(
-            value = "SELECT * from requests\n" +
+            value = "SELECT * FROM requests\n" +
                     "where address like CONCAT('%', :keyword, '%')\n" +
                     "or status like CONCAT('%', :keyword, '%')\n" +
                     "or reason like CONCAT('%', :keyword, '%')\n",
