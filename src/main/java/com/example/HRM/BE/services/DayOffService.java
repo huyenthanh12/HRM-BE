@@ -145,6 +145,8 @@ public class DayOffService {
 
     public DayOffEntity requestNewDayOff(DayOff dayOff) {
 
+        log.info("vo dayyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
+
         //number of day off register in request converter
         float numberDayOffs = commonMethods.calculateDaysBetweenTwoDate(dayOff.getDayStart(), dayOff.getDayEnd());
         LocalDate localDateStart = dayOff.getDayStart().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
