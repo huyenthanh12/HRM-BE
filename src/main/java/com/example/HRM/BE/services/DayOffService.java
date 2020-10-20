@@ -156,48 +156,48 @@ public class DayOffService {
         log.info("number day offfffffffffffffffff: " + numberDayOffs);
         log.info("number day offfffffffffffffffff remai: " + numberDayOffRemainingThisYear);
 
-//        if (numberDayOffs > numberDayOffRemainingThisYear) {
-//            throw new BadRequestException("The number of days left is not enough!");
-//        }
+        if (numberDayOffs > numberDayOffRemainingThisYear) {
+            throw new BadRequestException("The number of days left is not enough!");
+        }
 
-//        LocalDate localDateEnd = dayOff.getDayStart().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-//        int yearEnd = localDateStart.getYear();
-//        if (yearStart != yearEnd && yearEnd != Calendar.getInstance().get(Calendar.YEAR)) {
-//            throw new BadRequestException("Please register day off for this year");
-//        }
+        LocalDate localDateEnd = dayOff.getDayStart().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        int yearEnd = localDateStart.getYear();
+        if (yearStart != yearEnd && yearEnd != Calendar.getInstance().get(Calendar.YEAR)) {
+            throw new BadRequestException("Please register day off for this year");
+        }
 
-//        Optional<DayOffTypeEntity> dayOffTypeEntityOptional = dayOffTypeRepository.findById(dayOff.getDayOffType().getId());
-//        System.out.printf(String.valueOf(dayOffTypeEntityOptional));
-//        if (!dayOffTypeEntityOptional.isPresent()) {
-//            throw new DayOffTypeNotFound();
-//        }
+        Optional<DayOffTypeEntity> dayOffTypeEntityOptional = dayOffTypeRepository.findById(dayOff.getDayOffType().getId());
+        System.out.printf(String.valueOf(dayOffTypeEntityOptional));
+        if (!dayOffTypeEntityOptional.isPresent()) {
+            throw new DayOffTypeNotFound();
+        }
 
-//        Calendar calendarStart = Calendar.getInstance();
-//        Calendar calendarEnd = Calendar.getInstance();
-//
-//        calendarStart.setTime(dayOff.getDayStart());
-//        calendarEnd.setTime(dayOff.getDayEnd());
-//
-//        if (!(calendarStart.get(Calendar.HOUR_OF_DAY) == 8 || calendarStart.get(Calendar.HOUR_OF_DAY) == 12
-//                && (calendarEnd.get(Calendar.HOUR_OF_DAY) == 12 || calendarEnd.get(Calendar.HOUR_OF_DAY) == 18))) {
-//            throw new BadRequestException("Wrong time format");
-//        }
-//
-//        long dateStart = dayOff.getDayStart().getTime();
-//        long dateEnd = dayOff.getDayEnd().getTime();
-//
-//        log.info("toi dayyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
-//
-//        if (dateStart > dateEnd) {
-//            throw new BadRequestException("Incorrect information");
-//        }
-//        log.info("qua duccccccccccccccccccccccccccc");
-//        Date date = new Date(System.currentTimeMillis());
-//        dayOff.setProfileUser(userEntityProfileConverter.convert(userRepository.findById(getUserID()).get()));
-//        dayOff.setCreateAt(date);
-//        dayOff.setStatus(PENDING);
-//
-//        DayOffEntity dayOffEntity = dayOffDayOffEntityConverter.convert(dayOff);
+        Calendar calendarStart = Calendar.getInstance();
+        Calendar calendarEnd = Calendar.getInstance();
+
+        calendarStart.setTime(dayOff.getDayStart());
+        calendarEnd.setTime(dayOff.getDayEnd());
+
+        if (!(calendarStart.get(Calendar.HOUR_OF_DAY) == 8 || calendarStart.get(Calendar.HOUR_OF_DAY) == 12
+                && (calendarEnd.get(Calendar.HOUR_OF_DAY) == 12 || calendarEnd.get(Calendar.HOUR_OF_DAY) == 18))) {
+            throw new BadRequestException("Wrong time format");
+        }
+
+        long dateStart = dayOff.getDayStart().getTime();
+        long dateEnd = dayOff.getDayEnd().getTime();
+
+        log.info("toi dayyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
+
+        if (dateStart > dateEnd) {
+            throw new BadRequestException("Incorrect information");
+        }
+        log.info("qua duccccccccccccccccccccccccccc");
+        Date date = new Date(System.currentTimeMillis());
+        dayOff.setProfileUser(userEntityProfileConverter.convert(userRepository.findById(getUserID()).get()));
+        dayOff.setCreateAt(date);
+        dayOff.setStatus(PENDING);
+
+        DayOffEntity dayOffEntity = dayOffDayOffEntityConverter.convert(dayOff);
 
 //        Email email = new Email();
 //        email.setSendToEmail(emailAdmins);
@@ -211,8 +211,7 @@ public class DayOffService {
 //        email.setText(commonMethods.formatContentEmail(titles, content, POINT_PAGE_MANAGEMENT_DAY_OFF, POINT_CONTENT_MANAGEMENT_DAY_OFF));
 //        emailController.sendEmail(email);
 
-//        return dayOffRepository.save(dayOffEntity);
-        return new DayOffEntity();
+        return dayOffRepository.save(dayOffEntity);
     }
 
 
