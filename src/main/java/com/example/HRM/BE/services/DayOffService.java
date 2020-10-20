@@ -150,8 +150,11 @@ public class DayOffService {
         LocalDate localDateStart = dayOff.getDayStart().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         int yearStart =  localDateStart.getYear();
 
-//        //number of day off remaining in this year
-//        float numberDayOffRemainingThisYear = getNumberDayOffsByUserRemaining(getUserID(), yearStart);
+        //number of day off remaining in this year
+        float numberDayOffRemainingThisYear = getNumberDayOffsByUserRemaining(getUserID(), yearStart);
+        log.info("number day offfffffffffffffffff: " + numberDayOffs);
+        log.info("number day offfffffffffffffffff remai: " + numberDayOffRemainingThisYear);
+
 //        if (numberDayOffs > numberDayOffRemainingThisYear) {
 //            throw new BadRequestException("The number of days left is not enough!");
 //        }
