@@ -108,6 +108,7 @@ public class DayOffService {
         }
 
         Date startingDate = userEntityOptional.get().getStartingDay();
+        System.out.printf(String.valueOf(userEntityOptional.get()));
         if (startingDate == null) {
             throw new BadRequestException("Start bi null");
         }

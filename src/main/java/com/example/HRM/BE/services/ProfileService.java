@@ -10,6 +10,7 @@ import com.example.HRM.BE.exceptions.UserException.UserNotFoundException;
 import com.example.HRM.BE.repositories.RoleRepository;
 import com.example.HRM.BE.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -96,7 +97,7 @@ public class ProfileService {
             throw new UserHasExisted();
         }
         UserEntity userEntity = profileToUserEntity.convert(profile);
-
+        userEntity.setPassword(new BCryptPasswordEncoder().encode(userEntity.getEmail()));
         //set role default
         Set<RoleEntity> roleEntities = new HashSet<>();
         roleEntities.add(roleRepository.findByName("ROLE_MEMBER").get());
