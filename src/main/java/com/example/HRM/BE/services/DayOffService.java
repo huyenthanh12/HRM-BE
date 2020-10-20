@@ -109,7 +109,7 @@ public class DayOffService {
 
         Date startingDate = userEntityOptional.get().getStartingDay();
         if (startingDate == null) {
-            throw new BadRequestException("Incomplete information");
+            throw new BadRequestException("Start bi null");
         }
 
         Calendar calendar = Calendar.getInstance();
@@ -216,6 +216,9 @@ public class DayOffService {
 
 
     private float getNumberDayOffsByUserRemaining(int id, int year) {
+
+        log.info("id ủse : " + id);
+        log.info("id yearrrrrrrrrrrrrrrrrrrrr : " + year);
 
         Optional<UserEntity> userEntityOptional = userRepository.findById(id);
 
