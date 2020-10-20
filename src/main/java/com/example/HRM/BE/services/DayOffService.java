@@ -156,17 +156,17 @@ public class DayOffService {
             throw new BadRequestException("The number of days left is not enough!");
         }
 
-        LocalDate localDateEnd = dayOff.getDayStart().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        int yearEnd = localDateStart.getYear();
-        if (yearStart != yearEnd && yearEnd != Calendar.getInstance().get(Calendar.YEAR)) {
-            throw new BadRequestException("Please register day off for this year");
-        }
+//        LocalDate localDateEnd = dayOff.getDayStart().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+//        int yearEnd = localDateStart.getYear();
+//        if (yearStart != yearEnd && yearEnd != Calendar.getInstance().get(Calendar.YEAR)) {
+//            throw new BadRequestException("Please register day off for this year");
+//        }
 
-        Optional<DayOffTypeEntity> dayOffTypeEntityOptional = dayOffTypeRepository.findById(dayOff.getDayOffType().getId());
-        System.out.printf(String.valueOf(dayOffTypeEntityOptional));
-        if (!dayOffTypeEntityOptional.isPresent()) {
-            throw new DayOffTypeNotFound();
-        }
+//        Optional<DayOffTypeEntity> dayOffTypeEntityOptional = dayOffTypeRepository.findById(dayOff.getDayOffType().getId());
+//        System.out.printf(String.valueOf(dayOffTypeEntityOptional));
+//        if (!dayOffTypeEntityOptional.isPresent()) {
+//            throw new DayOffTypeNotFound();
+//        }
 
 //        Calendar calendarStart = Calendar.getInstance();
 //        Calendar calendarEnd = Calendar.getInstance();
