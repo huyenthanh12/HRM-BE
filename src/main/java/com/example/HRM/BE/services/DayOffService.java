@@ -168,19 +168,19 @@ public class DayOffService {
             throw new DayOffTypeNotFound();
         }
 
-        Calendar calendarStart = Calendar.getInstance();
-        Calendar calendarEnd = Calendar.getInstance();
-
-        calendarStart.setTime(dayOff.getDayStart());
-        calendarEnd.setTime(dayOff.getDayEnd());
-
-        if (!(calendarStart.get(Calendar.HOUR_OF_DAY) == 8 || calendarStart.get(Calendar.HOUR_OF_DAY) == 12
-                && (calendarEnd.get(Calendar.HOUR_OF_DAY) == 12 || calendarEnd.get(Calendar.HOUR_OF_DAY) == 18))) {
-            throw new BadRequestException("Wrong time format");
-        }
-
-        long dateStart = dayOff.getDayStart().getTime();
-        long dateEnd = dayOff.getDayEnd().getTime();
+//        Calendar calendarStart = Calendar.getInstance();
+//        Calendar calendarEnd = Calendar.getInstance();
+//
+//        calendarStart.setTime(dayOff.getDayStart());
+//        calendarEnd.setTime(dayOff.getDayEnd());
+//
+//        if (!(calendarStart.get(Calendar.HOUR_OF_DAY) == 8 || calendarStart.get(Calendar.HOUR_OF_DAY) == 12
+//                && (calendarEnd.get(Calendar.HOUR_OF_DAY) == 12 || calendarEnd.get(Calendar.HOUR_OF_DAY) == 18))) {
+//            throw new BadRequestException("Wrong time format");
+//        }
+//
+//        long dateStart = dayOff.getDayStart().getTime();
+//        long dateEnd = dayOff.getDayEnd().getTime();
 //
 //        log.info("toi dayyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
 //
