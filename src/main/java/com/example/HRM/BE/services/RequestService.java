@@ -1,6 +1,8 @@
 package com.example.HRM.BE.services;
 
 import com.example.HRM.BE.DTO.Request;
+import com.example.HRM.BE.common.Email;
+import com.example.HRM.BE.controllers.EmailController;
 import com.example.HRM.BE.converters.Bases.Converter;
 import com.example.HRM.BE.converters.RequestConverter.RequestEntityToRequest;
 import com.example.HRM.BE.converters.RequestConverter.RequestToRequestEntity;
@@ -13,6 +15,7 @@ import com.example.HRM.BE.repositories.RequestRepository;
 import com.example.HRM.BE.repositories.RequestTypeRepository;
 import com.example.HRM.BE.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -48,6 +51,12 @@ public class RequestService {
     @Autowired
     private ProfileService profileService;
 
+    @Value("#{'${emailAdmins}'.split(',')}")
+    private List<String> emailAdmins;
+
+    @Autowired
+    private EmailController emailController;
+
     public List<Request> getAllRequests() {
         return requestEntityToRequest.convert(requestRepository.findAll());
     }
@@ -61,7 +70,46 @@ public class RequestService {
         RequestEntity requestEntity = requestToRequestEntity.convert(request);
         requestRepository.save(requestEntity);
 
+//        sendRequestToAdmin(requestEntity.getUserEntity().getEmail(), requestEntity);
+
         return requestEntityToRequest.convert(requestEntity);
+    }
+
+    public void sendRequestToAdmin(String emailUserRequest, RequestEntity requestEntity) {
+        for(String emailAdmin : emailAdmins) {
+            String html =
+                    "<table>\n" +
+                            "    <col width=\"350\">\n" +
+                            "    <col width=\"350\">\n" +
+                            "    <col width=\"500\">\n" +
+                            "    <col width=\"450\">\n" +
+                            "    <tr>\n" +
+                            "        <th><span style=\"float: left;\">Request by email</span></th>\n" +
+                            "        <th><span style=\"float: left;\">Request type</span></th>\n" +
+                            "        <th><span style=\"float: left;\">Day request</span</th>\n" +
+                            "        <th><span style=\"float: left;\">Description</span></th>\n" +
+                            "    </tr>\n" +
+                            "    <tr>\n" +
+                            "        <td><span>" + requestEntity.getUserEntity().getEmail()+"</span></td>\n" +
+                            "        <td><span>"+requestEntity.getRequestTypeEntity().getName()+"</span></td>\n" +
+                            "        <td><span>"+requestEntity.getDateRequest()+"</span></td>\n" +
+                            "        <td><span>"+requestEntity.getReason()+"</span></td>\n" +
+                            "    </tr>\n" +
+                            "</table>";
+//                            "<form method=\"post\" action=\"https://helpdesk-kunlez-novahub.herokuapp.com/api/requests/approveRequest/" + requestEntity.getId() + "/" + tokenProvider.genTokenAdmin(emailAdmin) + "\">" +
+//                            "   <button type=\"submit\">APPROVE</button>" +
+//                            "</form>"+
+//                            "<form method=\"post\" action=\"https://helpdesk-kunlez-novahub.herokuapp.com/api/requests/rejectRequest/" + requestEntity.getId() + "/" + tokenProvider.genTokenAdmin(emailAdmin) + "\">" +
+//                            "   <button type=\"submit\">REJECT</button>" +
+//                            "</form>";
+            Email email = new Email();
+            List<String> emails = new ArrayList<>();
+            emails.add(emailAdmin);
+            email.setSendToEmail(emails);
+            email.setSubject(emailUserRequest);
+            email.setText(html);
+            emailController.sendEmail(email);
+        }
     }
 
     public List<Request> getMyRequests() {
