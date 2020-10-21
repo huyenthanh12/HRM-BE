@@ -24,7 +24,6 @@ public class RequestEntityToRequest extends Converter<RequestEntity, Request> {
         Request request = new Request();
 
         request.setId(source.getId());
-        request.setUser(userEntityToProfile.convert(source.getUserEntity()));
         request.setAddress(source.getAddress());
         request.setCreateAt(source.getCreateAt());
         request.setDayRequest(source.getDateRequest());

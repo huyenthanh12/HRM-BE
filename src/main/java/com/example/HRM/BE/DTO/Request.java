@@ -14,8 +14,6 @@ public class Request {
     @NotNull
     private RequestType requestType;
 
-    private Profile user;
-
     private String status;
 
     private Date dayRequest;

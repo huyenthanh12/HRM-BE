@@ -29,7 +29,6 @@ public class RequestToRequestEntity extends Converter<Request, RequestEntity> {
         requestEntity.setReason(source.getReason());
         requestEntity.setRequestTypeEntity(requestTypeToRequestTypeEntity.convert(source.getRequestType()));
         requestEntity.setStatus(source.getStatus());
-        requestEntity.setUserEntity(userRepository.findById(source.getUser().getId()).get());
 
         return requestEntity;
     }

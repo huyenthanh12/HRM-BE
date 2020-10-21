@@ -30,7 +30,6 @@ public class DayOffEntityToDayOff extends Converter<DayOffEntity, DayOff> {
         dayOff.setCreateAt(source.getCreateAt());
         dayOff.setDescription(source.getDescription());
         dayOff.setDayOffType(dayOffTypeEntityDayOffTypeConverter.convert(source.getDayOffTypeEntity()));
-        dayOff.setProfileUser(userEntityProfileConverter.convert(source.getUserEntity()));
         dayOff.setStatus(source.getStatus());
 
         return dayOff;

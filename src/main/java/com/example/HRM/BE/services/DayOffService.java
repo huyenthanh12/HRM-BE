@@ -108,7 +108,6 @@ public class DayOffService {
         }
 
         Date startingDate = userEntityOptional.get().getStartingDay();
-        System.out.printf(String.valueOf(userEntityOptional.get()));
         if (startingDate == null) {
             throw new BadRequestException("Start bi null");
         }
@@ -150,7 +149,6 @@ public class DayOffService {
         float numberDayOffs = commonMethods.calculateDaysBetweenTwoDate(dayOff.getDayStart(), dayOff.getDayEnd());
         LocalDate localDateStart = dayOff.getDayStart().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         int yearStart =  localDateStart.getYear();
-        System.out.println(userRepository.findById(getUserID()));
 
         //number of day off remaining in this year
         float numberDayOffRemainingThisYear = getNumberDayOffsByUserRemaining(getUserID(), yearStart);
@@ -168,7 +166,6 @@ public class DayOffService {
         }
 
         Optional<DayOffTypeEntity> dayOffTypeEntityOptional = dayOffTypeRepository.findById(dayOff.getDayOffType().getId());
-        System.out.printf(String.valueOf(dayOffTypeEntityOptional));
         if (!dayOffTypeEntityOptional.isPresent()) {
             throw new DayOffTypeNotFound();
         }
@@ -194,7 +191,6 @@ public class DayOffService {
         }
         log.info("qua duccccccccccccccccccccccccccc");
         Date date = new Date(System.currentTimeMillis());
-        dayOff.setProfileUser(userEntityProfileConverter.convert(userRepository.findById(getUserID()).get()));
         dayOff.setCreateAt(date);
         dayOff.setStatus(PENDING);
 

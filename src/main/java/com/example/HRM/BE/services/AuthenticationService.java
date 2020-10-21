@@ -4,6 +4,7 @@ import com.example.HRM.BE.DTO.Token;
 import com.example.HRM.BE.DTO.User;
 import com.example.HRM.BE.configurations.TokenProvider;
 import com.example.HRM.BE.entities.UserEntity;
+import com.example.HRM.BE.exceptions.UserException.BadRequestException;
 import com.example.HRM.BE.exceptions.UserException.UserAccessDeniedException;
 import com.example.HRM.BE.exceptions.UserException.UserDisableException;
 import com.example.HRM.BE.repositories.RoleRepository;
@@ -44,9 +45,9 @@ public class AuthenticationService {
     public String getEmailFromTokenUser(String tokenGoogle) throws IOException {
 
         GoogleIdToken idToken = GoogleIdToken.parse(jsonFactory, tokenGoogle);
+        System.out.println("ooooo: " + idToken);
         if (idToken != null) {
             GoogleIdToken.Payload payload = idToken.getPayload();
-
             String email = payload.getEmail();
 
             checkForUserRegister(email,
@@ -54,7 +55,6 @@ public class AuthenticationService {
                     (String) payload.get("given_name"));
 
             checkForUserIsDisable(email);
-
             return email;
         }
         return null;
@@ -66,7 +66,7 @@ public class AuthenticationService {
             final String token = jwtTokeUtil.generationTokenGoogle(userEntityOptional.get());
             return ResponseEntity.ok(new Token(token));
         }
-        throw new UserAccessDeniedException();
+        throw new BadRequestException("User is Denied to access");
     }
 
     public ResponseEntity<Token> generateToken(String email, String pass) {
@@ -85,8 +85,11 @@ public class AuthenticationService {
     public void checkForUserIsDisable(String email) {
         Optional<UserEntity> userEntityOptional = userRepository.findByEmail(email);
         if (userEntityOptional.isPresent()) {
+            System.out.println(userEntityOptional.get().getEmail());
+
             UserEntity userEntity = userEntityOptional.get();
-            if (!userEntity.isDisable()) {
+            if (userEntity.isDisable()) {
+                System.out.println(userEntityOptional.get().isDisable());
                 throw new UserDisableException();
             }
         }
