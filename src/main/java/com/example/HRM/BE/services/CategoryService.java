@@ -70,7 +70,8 @@ public class CategoryService {
         if (categoryEntityOptional.isPresent()) {
             CategoryEntity categoryEntity = categoryEntityOptional.get();
             categoryEntity.setName(category.getName());
-            category.setStatus(category.getStatus());
+            categoryEntity.setStatus(category.getStatus());
+
 
             categoryRepository.save(categoryEntity);
         } else {

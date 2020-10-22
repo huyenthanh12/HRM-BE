@@ -189,7 +189,6 @@ public class DayOffService {
         if (dateStart > dateEnd) {
             throw new BadRequestException("Incorrect information");
         }
-        log.info("qua duccccccccccccccccccccccccccc");
         Date date = new Date(System.currentTimeMillis());
         dayOff.setCreateAt(date);
         dayOff.setStatus(PENDING);
