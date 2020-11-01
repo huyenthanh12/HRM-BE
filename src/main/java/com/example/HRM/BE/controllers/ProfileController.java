@@ -36,7 +36,7 @@ public class ProfileController {
 
     @Secured("ROLE_MEMBER")
     @PutMapping("/avatars/{id}")
-    public void editAvatar(@RequestParam MultipartFile avatarBase, @PathParam("id") int id) throws IOException {
+    public void editAvatar(@RequestParam MultipartFile avatarBase, @PathVariable("id") int id) throws IOException {
         if (avatarBase.isEmpty()) {
             throw new FileNotFoundException();
         }
