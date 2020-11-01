@@ -62,11 +62,11 @@ public class ProfileService {
         userRepository.save(resultUserEntity);
     }
 
-    public void uploadAvatar(byte[] avatar, int idUser) {
+    public void uploadAvatar(byte[] avatarBase, int idUser) {
         Optional<UserEntity> userEntityOptional = userRepository.findById(idUser);
         if (userEntityOptional.isPresent()) {
             UserEntity userEntity = userEntityOptional.get();
-            userEntity.setAvatar(avatar);
+            userEntity.setAvatar(avatarBase);
             userRepository.save(userEntity);
         } else {
             throw new UserNotFoundException();
