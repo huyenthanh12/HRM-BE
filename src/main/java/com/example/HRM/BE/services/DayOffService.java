@@ -152,8 +152,6 @@ public class DayOffService {
 
         //number of day off remaining in this year
         float numberDayOffRemainingThisYear = getNumberDayOffsByUserRemaining(getUserID(), yearStart);
-        log.info("number day offfffffffffffffffff: " + numberDayOffs);
-        log.info("number day offfffffffffffffffff remai: " + numberDayOffRemainingThisYear);
 
         if (numberDayOffs > numberDayOffRemainingThisYear) {
             throw new BadRequestException("The number of days left is not enough!");
@@ -253,7 +251,7 @@ public class DayOffService {
             throw new DayOffNotFound();
         }
 
-        if (dayOffEntityOptional.get().getDescription() != PENDING) {
+        if (!dayOffEntityOptional.get().getStatus().equals(PENDING)) {
             throw new BadRequestException("This request has resolved");
         }
         dayOffEntityOptional.get().setStatus(APPROVED);
@@ -275,7 +273,7 @@ public class DayOffService {
             throw new DayOffNotFound();
         }
 
-        if (dayOffEntityOptional.get().getDescription() != PENDING) {
+        if (!dayOffEntityOptional.get().getStatus().equals(PENDING)) {
             throw new BadRequestException("This request has resolved");
         }
         dayOffEntityOptional.get().setStatus(REJECTED);
@@ -287,5 +285,17 @@ public class DayOffService {
         emailController.sendEmail(email);
 
         return dayOffRepository.save(dayOffEntityOptional.get());
+    }
+
+    public List<DayOff> getListDayOffUsed(Integer id, Integer year) {
+        Optional<UserEntity> userEntity = userRepository.findById(id);
+        if (!userEntity.isPresent()) {
+            throw new UserNotFoundException();
+        }
+        if (year == null) {
+            return dayOffEntityDayOffConverter.convert(dayOffRepository.findByUserEntity(userEntity.get()));
+        }
+        List<DayOffEntity> dayOffs = dayOffRepository.getDayOffByYear(year, id);
+        return dayOffEntityDayOffConverter.convert(dayOffs);
     }
 }

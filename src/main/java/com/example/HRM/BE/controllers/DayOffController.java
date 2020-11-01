@@ -48,6 +48,14 @@ public class DayOffController {
         return dayOffService.getNumberDayOffsByUser(id, year);
     }
 
+    @GetMapping("user_of_year/{id}")
+    public List<DayOff> getListDayOffUsed(@PathVariable("id") Integer id, @RequestParam(value = "year", required = false) Integer year) {
+        if (id == PERSONAL) {
+            id = dayOffService.getUserID();
+        }
+        return dayOffService.getListDayOffUsed(id, year);
+    }
+
     @PostMapping
     public DayOffEntity requestNewDayOff(@RequestBody DayOff dayOff) {
         return dayOffService.requestNewDayOff(dayOff);

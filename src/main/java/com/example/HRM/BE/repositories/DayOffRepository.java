@@ -1,6 +1,7 @@
 package com.example.HRM.BE.repositories;
 
 import com.example.HRM.BE.entities.DayOffEntity;
+import com.example.HRM.BE.entities.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -9,6 +10,8 @@ import java.util.List;
 public interface DayOffRepository extends JpaRepository<DayOffEntity, Integer> {
 
     List<DayOffEntity> findByOrderByStatusAsc();
+
+    List<DayOffEntity> findByUserEntity(UserEntity userEntity);
 
     List<DayOffEntity> findByUserEntityEmail(String email);
 

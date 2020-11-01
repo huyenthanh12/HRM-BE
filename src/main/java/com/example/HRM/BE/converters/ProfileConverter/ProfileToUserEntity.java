@@ -3,6 +3,7 @@ package com.example.HRM.BE.converters.ProfileConverter;
 import com.example.HRM.BE.DTO.Profile;
 import com.example.HRM.BE.DTO.Skill;
 import com.example.HRM.BE.converters.Bases.Converter;
+import com.example.HRM.BE.entities.RoleEntity;
 import com.example.HRM.BE.entities.SkillEntity;
 import com.example.HRM.BE.entities.UserEntity;
 import com.example.HRM.BE.repositories.SkillRepository;
@@ -41,8 +42,6 @@ public class ProfileToUserEntity extends Converter<Profile, UserEntity> {
 
         if (source.getSkills() != null) {
             Set<SkillEntity> listSkills = new HashSet<>();
-
-
         }
 
         return userEntity;
