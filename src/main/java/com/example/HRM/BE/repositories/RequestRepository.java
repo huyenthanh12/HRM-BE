@@ -2,6 +2,7 @@ package com.example.HRM.BE.repositories;
 
 import com.example.HRM.BE.DTO.Request;
 import com.example.HRM.BE.entities.RequestEntity;
+import com.example.HRM.BE.entities.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Component
@@ -40,9 +41,22 @@ public class ProfileToUserEntity extends Converter<Profile, UserEntity> {
         userEntity.setSex(source.getSex());
         userEntity.setStartingDay(source.getStartingDate());
 
+        Set<SkillEntity> listSkills = new HashSet<>();
         if (source.getSkills() != null) {
-            Set<SkillEntity> listSkills = new HashSet<>();
+            for (Skill skill : source.getSkills()) {
+                SkillEntity skillEntity = new SkillEntity();
+
+                if (skill.getId() != 0) {
+                    skillEntity = this.skillService.getSkillEntityFollowId(skill.getId());
+                } else {
+                    skillEntity = this.skillService.getSkillEntityFollowName(skill.getName());
+                }
+                listSkills.add(skillEntity);
+            }
         }
+        userEntity.setSkillEntities(listSkills);
+
+
 
         return userEntity;
     }

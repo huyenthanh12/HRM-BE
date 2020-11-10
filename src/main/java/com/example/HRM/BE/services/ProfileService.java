@@ -3,6 +3,7 @@ package com.example.HRM.BE.services;
 import com.example.HRM.BE.DTO.Profile;
 import com.example.HRM.BE.converters.Bases.Converter;
 import com.example.HRM.BE.entities.RoleEntity;
+import com.example.HRM.BE.entities.SkillEntity;
 import com.example.HRM.BE.entities.UserEntity;
 import com.example.HRM.BE.exceptions.UserException.EmailUserIsNotMatch;
 import com.example.HRM.BE.exceptions.UserException.UserHasExisted;
@@ -48,6 +49,7 @@ public class ProfileService {
         if (!userEntity.getEmail().equals(profile.getEmail())) {
             throw new EmailUserIsNotMatch();
         }
+
         UserEntity resultUserEntity = profileToUserEntity.convert(profile);
 
         //add password default

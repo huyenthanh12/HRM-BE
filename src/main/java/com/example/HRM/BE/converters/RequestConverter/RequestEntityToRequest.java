@@ -30,6 +30,7 @@ public class RequestEntityToRequest extends Converter<RequestEntity, Request> {
         request.setReason(source.getReason());
         request.setRequestType(requestTypeEntityToRequestType.convert(source.getRequestTypeEntity()));
         request.setStatus(source.getStatus());
+        request.setUser(userEntityToProfile.convert(source.getUserEntity()));
 
         return request;
 

@@ -1,6 +1,7 @@
 package com.example.HRM.BE.controllers;
 
 import com.example.HRM.BE.DTO.Profile;
+import com.example.HRM.BE.DTO.Skill;
 import com.example.HRM.BE.services.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;

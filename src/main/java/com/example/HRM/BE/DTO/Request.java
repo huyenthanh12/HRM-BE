@@ -24,4 +24,6 @@ public class Request {
     private String reason;
 
     private String address;
+
+    private Profile user;
 }

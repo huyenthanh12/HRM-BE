@@ -53,6 +53,14 @@ public class SkillService {
         }
     }
 
+    public SkillEntity getSkillEntityFollowId(int id) {
+        return this.skillRepository.findById(id).orElseThrow(() -> new SkillNotFound());
+    }
+
+    public SkillEntity getSkillEntityFollowName(String name) {
+        return this.skillRepository.findByName(name).orElseThrow(() -> new SkillNotFound());
+    }
+
     public List<Skill> getSkillsFollowUser(int id) {
         Optional<UserEntity> userEntityOptional = userRepository.findById(id);
         if (!userEntityOptional.isPresent()) {

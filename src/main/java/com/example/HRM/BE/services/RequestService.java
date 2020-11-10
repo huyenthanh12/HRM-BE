@@ -70,7 +70,7 @@ public class RequestService {
         RequestEntity requestEntity = requestToRequestEntity.convert(request);
         requestRepository.save(requestEntity);
 
-//        sendRequestToAdmin(requestEntity.getUserEntity().getEmail(), requestEntity);
+        sendRequestToAdmin(requestEntity.getUserEntity().getEmail(), requestEntity);
 
         return requestEntityToRequest.convert(requestEntity);
     }
@@ -116,7 +116,9 @@ public class RequestService {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        return requestEntityToRequest.convert(requestRepository.findByUserEntityEmail(authentication.getName()));
+        Optional<UserEntity> userEntityOptional = userRepository.findByEmail(authentication.getName());
+
+        return requestEntityToRequest.convert(requestRepository.findByUserEntityId(userEntityOptional.get().getId()));
     }
 
     public List<Request> searchRequestsFollowKeyword(String key) {
