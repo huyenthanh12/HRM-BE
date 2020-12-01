@@ -19,5 +19,7 @@ public class DayOff {
 
     DayOffType dayOffType;
 
-    String status;
+    private String status;
+
+    private Profile user;
 }

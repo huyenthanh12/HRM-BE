@@ -29,4 +29,12 @@ public class AuthenticationController {
         return authenticationService.generateTokenGoogle(email);
     }
 
+    @PutMapping
+    public ResponseEntity<Token> editAccount(@RequestBody User user){
+        return authenticationService.editAccount(user);
+    }
+    @PostMapping("/new")
+    public ResponseEntity<Token> add(@RequestBody User user){
+        return authenticationService.add(user);
+    }
 }

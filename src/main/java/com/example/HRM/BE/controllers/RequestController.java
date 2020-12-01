@@ -1,6 +1,7 @@
 package com.example.HRM.BE.controllers;
 
 import com.example.HRM.BE.DTO.Request;
+import com.example.HRM.BE.entities.RequestEntity;
 import com.example.HRM.BE.services.RequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -28,9 +29,9 @@ public class RequestController {
         return requestService.getMyRequests();
     }
 
-    @PostMapping
-    public Request addNewRequest(@RequestBody @Validated Request request) {
-        return requestService.addNewRequest(request);
+    @PostMapping("/email/{emailUser}")
+    public Request addNewRequest(@RequestBody @Validated Request request, @PathVariable("emailUser") String emailUser) {
+        return requestService.addNewRequestFollowEmailUser(request, emailUser);
     }
 
     @GetMapping("/search")
@@ -49,5 +50,17 @@ public class RequestController {
     @DeleteMapping("/{id}")
     public void deleteRequest(@PathVariable int id) {
         requestService.deleteRequest(id);
+    }
+
+    @Secured("ROLE_ADMIN")
+    @GetMapping("/approve/{id}/{keyAdmin}")
+    public Request approvedRequest(@PathVariable int id, @PathVariable String keyAdmin){
+         return requestService.approvedOrRejectRequest(id, keyAdmin, "APPROVED");
+    }
+
+    @Secured("ROLE_ADMIN")
+    @GetMapping("reject/{id}/{keyAdmin}")
+    public Request rejectRequest(@PathVariable int id, @PathVariable String keyAdmin){
+        return requestService.approvedOrRejectRequest(id, keyAdmin, "REJECTED");
     }
 }

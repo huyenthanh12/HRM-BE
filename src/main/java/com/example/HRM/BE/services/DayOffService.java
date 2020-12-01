@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -143,7 +144,7 @@ public class DayOffService {
         return result;
     }
 
-    public DayOffEntity requestNewDayOff(DayOff dayOff) {
+    public DayOffEntity requestNewDayOff(DayOff dayOff, String emailUser) {
 
         //number of day off register in request converter
         float numberDayOffs = commonMethods.calculateDaysBetweenTwoDate(dayOff.getDayStart(), dayOff.getDayEnd());
@@ -173,16 +174,11 @@ public class DayOffService {
 
         calendarStart.setTime(dayOff.getDayStart());
         calendarEnd.setTime(dayOff.getDayEnd());
-//
-//        if (!(calendarStart.get(Calendar.HOUR_OF_DAY) == 8 || calendarStart.get(Calendar.HOUR_OF_DAY) == 12
-//                && (calendarEnd.get(Calendar.HOUR_OF_DAY) == 12 || calendarEnd.get(Calendar.HOUR_OF_DAY) == 18))) {
-//            throw new BadRequestException("Wrong time format");
-//        }
+
 
         long dateStart = dayOff.getDayStart().getTime();
         long dateEnd = dayOff.getDayEnd().getTime();
 
-        log.info("toi dayyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
 
         if (dateStart > dateEnd) {
             throw new BadRequestException("Incorrect information");
@@ -190,30 +186,31 @@ public class DayOffService {
         Date date = new Date(System.currentTimeMillis());
         dayOff.setCreateAt(date);
         dayOff.setStatus(PENDING);
+        dayOff.setUser(Profile.builder().id(
+                this.userRepository.findByEmail(emailUser).orElseThrow(
+                        () -> new UsernameNotFoundException(emailUser)
+                ).getId()
+                ).build());
 
         DayOffEntity dayOffEntity = dayOffDayOffEntityConverter.convert(dayOff);
 
-//        Email email = new Email();
-//        email.setSendToEmail(emailAdmins);
-//        email.setSubject(SUBJECT_DAY_OFF);
-//
-//        String[] titles = {"Day off by email", "Day off type", "Create At", "Day start", "Day end", "Description"};
-//        String[] content = {dayOffEntity.getUserEntity().getEmail(), dayOffEntity.getDayOffTypeEntity().getName(),
-//                            dayOffEntity.getCreateAt().toString(), dayOffEntity.getDayStart().toString(),
-//                            dayOffEntity.getDayEnd().toString(), dayOffEntity.getDescription()};
-//
-//        email.setText(commonMethods.formatContentEmail(titles, content, POINT_PAGE_MANAGEMENT_DAY_OFF, POINT_CONTENT_MANAGEMENT_DAY_OFF));
-//        emailController.sendEmail(email);
+        Email email = new Email();
+        email.setSendToEmail(emailAdmins);
+        email.setSubject(SUBJECT_DAY_OFF);
+
+        String[] titles = {"Day off by email", "Day off type", "Create At", "Day start", "Day end", "Description"};
+        String[] content = {dayOffEntity.getUserEntity().getEmail(), dayOffEntity.getDayOffTypeEntity().getName(),
+                            dayOffEntity.getCreateAt().toString(), dayOffEntity.getDayStart().toString(),
+                            dayOffEntity.getDayEnd().toString(), dayOffEntity.getDescription()};
+
+        email.setText(commonMethods.formatContentEmail(titles, content, POINT_PAGE_MANAGEMENT_DAY_OFF, POINT_CONTENT_MANAGEMENT_DAY_OFF));
+        emailController.sendEmail(email);
 
         return dayOffRepository.save(dayOffEntity);
     }
 
 
     private float getNumberDayOffsByUserRemaining(int id, int year) {
-
-        log.info("id ủse : " + id);
-        log.info("id yearrrrrrrrrrrrrrrrrrrrr : " + year);
-
         Optional<UserEntity> userEntityOptional = userRepository.findById(id);
 
         if (!userEntityOptional.isPresent()) {

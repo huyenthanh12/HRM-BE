@@ -56,9 +56,9 @@ public class DayOffController {
         return dayOffService.getListDayOffUsed(id, year);
     }
 
-    @PostMapping
-    public DayOffEntity requestNewDayOff(@RequestBody DayOff dayOff) {
-        return dayOffService.requestNewDayOff(dayOff);
+    @PostMapping("email/{emailUser}")
+    public DayOffEntity requestNewDayOff(@RequestBody DayOff dayOff, @PathVariable("emailUser") String emailUser) {
+        return dayOffService.requestNewDayOff(dayOff, emailUser);
     }
 
     @DeleteMapping("/{id}")

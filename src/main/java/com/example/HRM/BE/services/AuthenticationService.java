@@ -3,8 +3,10 @@ package com.example.HRM.BE.services;
 import com.example.HRM.BE.DTO.Token;
 import com.example.HRM.BE.DTO.User;
 import com.example.HRM.BE.configurations.TokenProvider;
+import com.example.HRM.BE.entities.RoleEntity;
 import com.example.HRM.BE.entities.UserEntity;
 import com.example.HRM.BE.exceptions.UserException.BadRequestException;
+import com.example.HRM.BE.exceptions.UserException.PasswordNotPassException;
 import com.example.HRM.BE.exceptions.UserException.UserAccessDeniedException;
 import com.example.HRM.BE.exceptions.UserException.UserDisableException;
 import com.example.HRM.BE.repositories.RoleRepository;
@@ -23,7 +25,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class AuthenticationService {
@@ -107,5 +111,33 @@ public class AuthenticationService {
 
     public ResponseEntity<Token> loginWithUsernamePassword(User user) {
         return generateToken(user.getUsername(), user.getPassword());
+    }
+
+    public ResponseEntity<Token> editAccount(User user) {
+        UserEntity userEntityFromDB = this.userRepository.findByEmail(user.getUsername()).orElseThrow(
+                () -> new UsernameNotFoundException(user.getUsername())
+        );
+        if (!BCrypt.checkpw(user.getPassword(), userEntityFromDB.getPassword())) {
+            throw new PasswordNotPassException();
+        }
+        userEntityFromDB = this.userRepository.save(userEntityFromDB);
+        System.out.println(user.getPasswordNew());
+        userEntityFromDB.setPassword(new BCryptPasswordEncoder().encode(user.getPasswordNew()));
+        userEntityFromDB = this.userRepository.save(userEntityFromDB);
+        System.out.println(userEntityFromDB.getEmail());
+        return generateToken(userEntityFromDB.getEmail(), user.getPasswordNew());
+    }
+
+    public  ResponseEntity<Token> add(User user) {
+        UserEntity userEntity =  new UserEntity();
+        userEntity.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+        userEntity.setEmail(user.getUsername());
+        Set<RoleEntity> roleEntity = new HashSet<>();
+        roleEntity.add(roleRepository.findByName("ROLE_MEMBER").get());
+//        System.out.println(roleEntity.getName());
+        userEntity.setRoleEntities(roleEntity);
+        userEntity = this.userRepository.save(userEntity);
+        return generateToken(userEntity.getEmail(), userEntity.getPassword());
+
     }
 }

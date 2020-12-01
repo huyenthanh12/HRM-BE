@@ -31,6 +31,5 @@ public class RequestEntity {
 
     private String reason;
 
-    private String address;             //To chuc party phai co bo sung dia chi
-
+    private String address;
 }

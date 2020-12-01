@@ -56,8 +56,6 @@ public class ProfileToUserEntity extends Converter<Profile, UserEntity> {
         }
         userEntity.setSkillEntities(listSkills);
 
-
-
         return userEntity;
     }
 }
